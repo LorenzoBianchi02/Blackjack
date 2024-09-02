@@ -1,0 +1,21 @@
+-   printing name of enum in table automaticly
+-   removing -1 from max in table printing
+
+-   differentiate train function from simulate frunction
+
+
+-   variable bets size based on count
+
+-   usare bools
+
+    
+
+-   split
+-   double
+
+-   define max state log
+
+
+-   free malloc
+
+-   change MAX_VAL defines to real names

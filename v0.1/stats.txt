@@ -1,0 +1,5 @@
+(1) HIT < 17 otherwise STAND:
+        simulated: 10M          shoe_size: 6 decks
+        "profit": -356902	average_profit: -0.035690
+        player_win: 3657329	dealer_win: 4919347	draws: 970754	blackjacks: 452570
+
