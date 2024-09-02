@@ -5,8 +5,6 @@
 Action strat_stand17(int count);
 Action strat_simple(int count, int dealer);
 
-//tmp
-
 int main(){
 
     init(0, 1);
