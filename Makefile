@@ -38,3 +38,9 @@ remove:
 
 clear:
 	clear
+
+
+push:
+	git add .
+	git commit -m "auto generated message"
+	git push
