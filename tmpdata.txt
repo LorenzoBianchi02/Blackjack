@@ -1,0 +1,10 @@
+BASIC STRATEGY (no DOUBLE)
+perc: -0.000626% (~0.0007)
+won: 0.434614% (bj: 0.046191%), loss: 0.481423%, draw: 0.083963%     (1.000000%)
+hits: 67596597, stands: 68096898, doubles: 0
+
+BASIC STRATEGY (yes DOUBLE)
+tot: 1876951
+perc: 0.018770%
+won: 0.446109% (bj: 0.046216%), loss: 0.472295%, draw: 0.081595%     (1.000000%)
+hits: 54158299, stands: 59591099, doubles: 11800295
