@@ -41,7 +41,7 @@ int main(){
 
     init(0, 1);
 
-    int num_episodes = 1000000;
+    int num_episodes = 100000000;
     int tot_reward = 0;
     int win=0, loss=0, draw=0, blackjack=0;
 
@@ -72,6 +72,7 @@ int main(){
             // Action move = strat_stand17(count);
             // Action move = strat_simple(count, hand.dealer_init);
             Action move = strat_basicstrategy(count, hand.dealer_init, usable_ace);
+            // printf("%d (%d %d %d)\n", move, count, hand.dealer_init, usable_ace);
             
             info_move[move]++;
             hand = step(move);
@@ -137,16 +138,24 @@ Action strat_simple(int count, int dealer){
 }
 
 Action strat_basicstrategy(int count, int dealer, int ace){
+    Action move;
     if(ace){
-        Action move = basic_hard[count - 13][dealer - 2]; 
-        return move;
+        move = basic_hard[count - 13][dealer - 2]; 
     }else{
         if(count < 8)
             return HIT;
-        if(count > 17)
+        if(count >= 17)
             return STAND;
 
-        Action move = basic_soft[count - 8][dealer - 2] ;
-        return move;
+         move = basic_soft[count - 8][dealer - 2] ;
     }
+
+    // no DOUBLE allowed
+    // if(move == DOUBLE){
+    //     if(count > 17)
+    //         move = STAND;
+    //     else
+    //         move = HIT;
+    // }
+        return move;
 }

@@ -28,7 +28,7 @@ int player_bet;
 Hand ep;
 Shoe env;
 
-void init(int seed, int n){
+void init(int seed, int num_decks){
     if(!seed){
         seed = time(NULL);
         srand(seed);
@@ -37,11 +37,11 @@ void init(int seed, int n){
 
     printf("seed: %d\n\n", seed);
 
-    n *= 4;
-    env.size = n * 13;
+    num_decks *= 4;
+    env.size = num_decks * 13;
 
     //memcpy could be better
-    for(int i=0; i<n; i++){
+    for(int i=0; i<num_decks; i++){
         for(int j=0; j<sizeof(deck)/sizeof(int); j++){
             env.cards[i*13+j] = deck[j];
         }
@@ -160,7 +160,7 @@ Hand step(Action action){
             ep.dealer[1] = 0;
 
             //dealer hits, cards got go to ep.dealer
-            while(count_d < 17){    //TODO: 
+            while(count_d < 17 || (count_d == 17 && usable_ace_d)){    //TODO: 
                 dealer2 = draw();
                 ep.dealer[d_cards-1] = dealer2;
                 count_d += dealer2;
