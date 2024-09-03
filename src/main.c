@@ -49,13 +49,12 @@ int main(){
     int count=0, usable_ace=0, num_cards=0;
 
     for(int i=0; i<num_episodes; i++){
-        // printf("START\n");
-        count = 0;
+        printf("START\n");
         usable_ace = 0;
         num_cards = 2;
 
         hand = reset(1);
-        count += hand.val_init + hand.val;
+        count = hand.val_init + hand.val;
 
         // check for usable ace
         if(hand.val_init == 11)
@@ -72,7 +71,7 @@ int main(){
             // Action move = strat_stand17(count);
             // Action move = strat_simple(count, hand.dealer_init);
             Action move = strat_basicstrategy(count, hand.dealer_init, usable_ace, num_cards);
-            // printf("%d (%d %d %d)\n", move, count, hand.dealer_init, usable_ace);
+            printf("%d (%d %d %d)\n", move, count, hand.dealer_init, usable_ace);
             
             info_move[move]++;
             if(move != STAND){  //FIXME: might not be correct when adding other moves
@@ -109,13 +108,23 @@ int main(){
         if(i%100000 == 0)
             printf("%d\n", i);
 
-        int cont=0, cont2=hand.dealer_init;
-        while(hand.dealer[cont]){
+        printf("%d vs %d ", count, hand.dealer_init);
+
+        int cont=0, cont2=hand.dealer_init, d_ace = 0;
+        if(hand.dealer_init == 11)
+            d_ace++;
+
+        while(hand.dealer[cont] > 0){
             cont2+=hand.dealer[cont];
+            if(cont2 > 21 && d_ace){
+                cont2-=10;
+                d_ace--;
+            }
+            printf("%d ", hand.dealer[cont]);
             cont++;
         }
 
-        // printf("%d vs %d (%.1f)\n", count, cont2, hand.reward);
+        printf("= %d (%.1f)\n", cont2, hand.reward);
     }
 
     

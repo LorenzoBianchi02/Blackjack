@@ -20,7 +20,7 @@ int deck[] = {11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
 
 int dealer2; // dealer_init hidden card
 int count_p;   // player value count
-int count_d;    // dealer count
+int count_d;    // dealer count 
 int usable_ace_p;     // wether player has a usable ace
 int usable_ace_d;     // wether dealer_init has a usable ace
 int player_bet;
@@ -76,6 +76,7 @@ Hand reset(int bet){
     if(ep.val == 11)
         usable_ace_p++;
 
+    //in case the player has 2 aces, use one already
     if(usable_ace_p == 2){
         usable_ace_p--;
         count_p-=10;

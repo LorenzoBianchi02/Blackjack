@@ -10,13 +10,13 @@ typedef struct Hand{
     int val_init;
     int val;
     int dealer_init;
-    int dealer[100]; //find max value
+    int dealer[100]; //TODO: find more appropriate max value
 }Hand;
 
 void init(int seed, int num_decks);
 Hand reset(int bet);
 Hand step(Action action);
 
-void printShoe(); //FIXME: to remove
+void printShoe(); //FIXME: to remove from header
 
 #endif
