@@ -40,14 +40,14 @@ void init(int seed, int n){
     n *= 4;
     env.size = n * 13;
 
-    //memcpy could be better    
+    //memcpy could be better
     for(int i=0; i<n; i++){
         for(int j=0; j<sizeof(deck)/sizeof(int); j++){
             env.cards[i*13+j] = deck[j];
         }
     }
 
-    shuffleShoe();    
+    shuffleShoe();
 }
 
 Hand reset(int bet){
@@ -81,7 +81,7 @@ Hand reset(int bet){
         count_p-=10;
     }
 
-    // check for usable dealer_init ace
+    // check for usable dealer ace
     if(ep.dealer_init == 11)
         usable_ace_d++;
     if(dealer2 == 11)
@@ -89,7 +89,7 @@ Hand reset(int bet){
 
     if(usable_ace_d == 2){
         usable_ace_d--;
-        dealer2 -= 10;
+        count_d -= 10;
     }
 
     // check for dealer_init blackjack
@@ -135,29 +135,32 @@ void shuffleShoe(){
 }
 
 
+//FIXME: using functions might be a bit smarter
 Hand step(Action action){
     switch (action){
         case HIT:
+            //player hits
             ep.val = draw();
             count_p += ep.val;
             if(ep.val == 11)
                 usable_ace_p++;
-            // player hits to 21
+
+            //if player hits to 21 he has to stand
             if(count_p == 21)
                 goto stand; //MUAHAHAHA, your mortal oppinion does not matter
             break;
 
         case STAND:
-            ep.val = 0;
+            ep.val = 0; //if player got to stand without standing, they should still know what card they got
             stand:
-
 
             int d_cards = 2;
             ep.done = 1;
             ep.dealer[0] = dealer2;
             ep.dealer[1] = 0;
 
-            while(count_d < 17){    //TODO: put dealer action in function with "config"
+            //dealer hits, cards got go to ep.dealer
+            while(count_d < 17){    //TODO: 
                 dealer2 = draw();
                 ep.dealer[d_cards-1] = dealer2;
                 count_d += dealer2;
@@ -172,21 +175,30 @@ Hand step(Action action){
             }
 
             ep.dealer[d_cards] = 0;
-    
-            if(dealer2 == 11)
-                usable_ace_d++;
-            if(count_d > 21 && usable_ace_d){
-                count_d -= 10;
-                usable_ace_d--;
-            }
-        
 
+            //check who won
             if(count_d > 21)
                 ep.reward = player_bet;
             else if(count_d > count_p)
                 ep.reward = -player_bet;
             else if(count_d < count_p)
                 ep.reward = player_bet;
+
+            break;
+
+        case DOUBLE:
+            //doubles the bet
+            player_bet *= 2;
+
+            //hits
+            ep.val = draw();
+            count_p += ep.val;
+            if(ep.val == 11)
+                usable_ace_p++;
+
+            //player has to stand
+            goto stand;
+
             break;
 
 
