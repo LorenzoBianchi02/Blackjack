@@ -68,7 +68,7 @@ Hand reset(int bet){
     ep.dealer[0] = 0;
 
     count_p = ep.val_init + ep.val;
-    count_d = ep.dealer_init + dealer2;
+    count_d = ep.dealer_init;
 
     // check for usable player ace
     if(ep.val_init == 11)
@@ -93,8 +93,7 @@ Hand reset(int bet){
     }
 
     // check for dealer_init blackjack
-    if(count_d == 21){
-        //printf("BJ dealer\n");
+    if(ep.dealer_init + dealer2 == 21){
         ep.done = 1;
         if(count_p != 21){
             ep.reward = -bet;
@@ -103,7 +102,6 @@ Hand reset(int bet){
 
     // check for player blackjack
     else if(count_p == 21){
-        //printf("BJ player\n");
         ep.reward = bet * 1.5;
         ep.done = 1;
     }
@@ -158,9 +156,11 @@ Hand step(Action action){
             ep.done = 1;
             ep.dealer[0] = dealer2;
             ep.dealer[1] = 0;
+            count_d += dealer2;
 
-            //dealer hits, cards got go to ep.dealer
-            while(count_d < 17 || (count_d == 17 && usable_ace_d)){    //TODO: 
+            //dealer hits, cards drawn go to ep.dealer
+            while(count_d < 17 || (count_d == 17 && usable_ace_d)){
+                //dealer hits
                 dealer2 = draw();
                 ep.dealer[d_cards-1] = dealer2;
                 count_d += dealer2;
@@ -198,8 +198,7 @@ Hand step(Action action){
 
             //player has to stand
             goto stand;
-
-            break;
+            break; //not usefull but I can
 
 
         //TODO: add actions
